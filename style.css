@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+    background-color: #fceef6;
+    margin: 40px auto;
+    max-width: 900px;
+    padding: 0 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    border-bottom: 1px solid #000;
+    padding-bottom: 4px;
+    margin-top: 30px;
+}
+
+hr {
+    border-top: 1px solid #000;
+    margin: 20px 0;
+}
+
+ul {
+    padding-left: 24px;
+    margin: 6px 0;
+}
+
+ul li {
+    margin-bottom: 4px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+table td {
+    padding: 4px 8px;
+    vertical-align: top;
+}
+
+.year-col {
+    white-space: nowrap;
+    width: 150px;
+}

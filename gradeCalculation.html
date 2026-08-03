@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Calculator</title>
+    <style>
+        body {
+            margin: 0;
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .mainContainer {
+            width: 400px;
+            border: 5px inset rgb(240, 240, 240);
+            padding: 10px 30px 50px;
+        }
+        .backBtn {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mainContainer">
+        <!-- Back Button: History API -->
+        <button type="button" class="backBtn" onclick="history.back()">Back</button>
+
+        <h1>Calculate Grade</h1>
+
+        <!-- Validation: score must be a number between 0 and 100 -->
+        <form id="frmGrade" onsubmit="calculateGrade(event)">
+            <p style="display: inline;">Enter Amount:</p>
+            <input type="number" step="any" min="0" max="100" name="txtAmount" id="txtAmount" required>
+            <button type="submit">Submit</button>
+        </form>
+
+        <p>You got an <span id="txtAnswer">...</span>.</p>
+    </div>
+
+    <script>
+        function calculateGrade(event){
+            event.preventDefault(); // stop the form from reloading the page
+
+            let inputAmount = document.getElementById('txtAmount');
+
+            if (!inputAmount.checkValidity()) {
+                inputAmount.reportValidity();  // show the browser's validation message
+                return;
+            }
+
+            let amount = parseFloat(inputAmount.value);
+            let grade = '';
+            if (amount <= 100 && amount >= 80) grade = 'A';
+            else if (amount < 80 && amount >= 70) grade = 'B';
+            else if (amount < 70 && amount >= 60) grade = 'C';
+            else if (amount < 60 && amount >= 50) grade = 'D';
+            else grade = 'F';
+            document.getElementById('txtAnswer').innerHTML = grade;
+        }
+    </script>
+</body>
+</html>

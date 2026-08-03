@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate Change</title>
+    <style>
+        body {
+            margin: 0;
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .mainContainer {
+            width: 400px;
+            border: 5px inset rgb(240, 240, 240);
+            padding: 10px 30px 50px;
+        }
+        .backBtn {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mainContainer">
+        <!-- Back Button: History API -->
+        <button type="button" class="backBtn" onclick="history.back()">Back</button>
+
+        <h1>Calculate Change</h1>
+
+        <!-- Validation: amount must be a positive number -->
+        <form id="frmChange" onsubmit="calculateChange(event)">
+            <p style="display: inline;">Enter Amount:</p>
+            <input type="number" step="any" min="1" name="txtAmount" id="txtAmount" required>
+            <button type="submit">Submit</button>
+        </form>
+
+        <p id="txtAnswer"></p>
+    </div>
+
+    <script>
+        function calculateChange(event){
+            event.preventDefault(); // stop the form from reloading the page
+
+            let inputAmount = document.getElementById('txtAmount');
+
+            if (!inputAmount.checkValidity()) {
+                inputAmount.reportValidity();  // show the browser's validation message
+                return;
+            }
+
+            let amount = parseFloat(inputAmount.value);
+            let changes = [1000, 500, 100, 50, 20, 10, 5, 2, 1];
+            let result = {};
+            for (let x of changes) {
+                while(amount > 0) {
+                    if (amount >= x) {
+                        if (!result[x]) {
+                            result[x] = 1;
+                        }
+                        else {
+                            result[x] += 1;
+                        }
+                        amount -= x;
+                    }
+                    else {
+                        break;
+                    }
+                }
+            }
+            let outputDisplay = "";
+            for (let key in result) {
+                outputDisplay = result[key] + " of ฿" + key + "<br>" + outputDisplay;
+            }
+
+            document.getElementById('txtAnswer').innerHTML = outputDisplay;
+        }
+    </script>
+</body>
+</html>

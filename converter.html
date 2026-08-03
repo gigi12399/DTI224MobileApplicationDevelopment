@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Measurement Converter</title>
+    <style>
+        body {
+            margin: 0;
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .mainContainer {
+            width: 400px;
+            border: 5px inset rgb(240, 240, 240);
+            padding: 10px 30px 50px;
+        }
+        .backBtn {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mainContainer">
+        <!-- Back Button: History API -->
+        <button type="button" class="backBtn" onclick="history.back()">Back</button>
+
+        <h1>Measurement Converter</h1>
+
+        <form id="frmConverter" onsubmit="convertMeasurement(event)">
+            <p style="display: inline;">Enter Inch:</p>
+            <input type="number" step="any" min="0" name="txtInch" id="txtInch" required>
+            <button type="submit">Submit</button>
+        </form>
+
+        <p>Equal to <span id="txtAnswer">&nbsp;&nbsp;&nbsp;</span> cm</p>
+    </div>
+
+    <script>
+        function convertMeasurement(event){
+            event.preventDefault(); // stop the form from reloading the page
+
+            let inputInch = document.getElementById('txtInch');
+
+            if (!inputInch.checkValidity()) {
+                inputInch.reportValidity();  // show the browser's validation message
+                return;
+            }
+
+            let valueInch = parseFloat(inputInch.value);
+            let valueAnswer = valueInch * 2.54;
+            document.getElementById('txtAnswer').innerHTML = valueAnswer;
+        }
+    </script>
+</body>
+</html>

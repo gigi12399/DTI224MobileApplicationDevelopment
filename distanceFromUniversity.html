@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How far from University?</title>
+    <style>
+        body {
+            margin: 0;
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .mainContainer {
+            width: 400px;
+            border: 5px inset rgb(240, 240, 240);
+            padding: 10px 30px 50px;
+        }
+        .backBtn {
+            margin-bottom: 15px;
+        }
+        #txtAnswer {
+            font-weight: bold;
+        }
+        .note {
+            color: gray;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <div class="mainContainer">
+        <!-- Back Button: History API -->
+        <button type="button" class="backBtn" onclick="history.back()">Back</button>
+
+        <h1>How far from University?</h1>
+
+        <button type="button" onclick="findDistance()">Get My Location</button>
+
+        <p>Your position: <span id="txtPosition">-</span></p>
+        <p>Distance: <span id="txtAnswer">-</span></p>
+    </div>
+
+    <script>
+        // University coordinates (Kasem Bundit University).
+        const UNI_LAT = 13.6900;   // latitude
+        const UNI_LNG = 100.6450;  // longitude
+
+        function findDistance(){
+            // Geolocation API: is it supported by the browser?
+            if (!navigator.geolocation) {
+                document.getElementById('txtAnswer').innerHTML = "Geolocation is not supported.";
+                return;
+            }
+
+            // Ask the browser for the current position
+            navigator.geolocation.getCurrentPosition(onSuccess, onError);
+        }
+
+        function onSuccess(position){
+            let myLat = position.coords.latitude;
+            let myLng = position.coords.longitude;
+
+            document.getElementById('txtPosition').innerHTML =
+                myLat.toFixed(5) + ", " + myLng.toFixed(5);
+
+            // x = difference in longitude, y = difference in latitude
+            let x = myLng - UNI_LNG;
+            let y = myLat - UNI_LAT;
+
+            // Distance = sqrt(x^2 + y^2)  (in degrees)
+            let distanceDegrees = Math.sqrt(x * x + y * y);
+
+            // 1 degree is about 111 km
+            let distanceKm = distanceDegrees * 111;
+
+            document.getElementById('txtAnswer').innerHTML =
+                distanceDegrees.toFixed(5) + " degrees (about " + distanceKm.toFixed(2) + " km)";
+        }
+
+        function onError(error){
+            document.getElementById('txtAnswer').innerHTML = "Unable to get location: " + error.message;
+        }
+    </script>
+</body>
+</html>
